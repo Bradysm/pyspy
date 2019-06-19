@@ -26,8 +26,8 @@ def main():
     """
     # create the email from formatter, and close it
     f = open("format.txt")
-    my_email = f.readline()
-    to_email = f.readline()
+    my_email = f.readline().rstrip('\n')
+    to_email = f.readline().rstrip('\n')
     f.close()
 
     # run the logger

