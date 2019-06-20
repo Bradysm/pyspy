@@ -1,6 +1,6 @@
 # :ghost: Welcome to PySpy :ghost:
 The purpose of PySpy is to create a realistic keylogger for educational purposes</br></br>
-After working for NASA :rocket: and performing pen-testing for them, I knew I wanted to challenge myself and learn within the cybersecurity field. I knew about what Snowden did, but never really understood how a program like that would work. So...</br>
+After working for NASA :rocket: and performing pen-testing for them, I knew I wanted to challenge myself and learn within the cybersecurity field. I knew about famour hackers using keyloggers, but never really understood how a program like that would work. So...</br>
 ***I decided to build one!***
 
 ## Warning
