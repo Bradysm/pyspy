@@ -3,6 +3,7 @@ import os.path
 import errno
 from os import path
 import os
+import getpass
 import yagmail
 
 # check to see if format exists
@@ -12,7 +13,7 @@ if not path.exists('src/format.txt'):
 # open from the format file
 f = open("src/format.txt")
 email_add = f.readline().rstrip('\n')
-pwd = input('Email password: ')
+pwd = getpass.getpass("Email password: ")
 f.close()
 
 # valid the email and add to the keychain
