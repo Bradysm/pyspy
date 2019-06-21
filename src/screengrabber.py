@@ -24,5 +24,6 @@ class ImageGrabber:
         """
         img = self.grab_to_file(filename)
         img.show()
+        return img
         
 

