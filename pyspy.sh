@@ -10,8 +10,10 @@
 # June 17, 2019
 
 # install the python modules if needed
-pip3 install keyring
-pip3 install yagmail
+pip3 install keyring # used for email verification
+pip3 install yagmail # used to send emails over python
+pip3 install pillow  # pyscreenshot dependency
+pip3 install pyscreenshot # used to take screenshots of computer
 
 # check to see if the format file exists
 FILE=./src/format.txt
