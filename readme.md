@@ -8,7 +8,7 @@ This program is by no means intended to be used in the field, and I take no resp
 
 ## How to use
 Prior to running this script, you will need two things:
-1. create a ***"format.txt"*** file in the same directory that the script is contained within. The file will need to be structured as follows:
+1. create a ***"format.txt"*** file in the src directory. The file will need to be structured as follows:
 ``` txt
 <senders-email>
 <recievers-email>
