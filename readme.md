@@ -25,7 +25,4 @@ This will run the keylogger and install the dependencies that are needed to run 
 The key here is that you need **ROOT** access to be able to retrieve the on_press events from the keyboard. So, if you were going to use this in real life you would need some form of root escalation prior to running this script.
 
 ## What to expect from PySpy :snake: :keyboard:
-PySpy will track the users :keyboard: and log the keystrokes to a file until the application is terminated. Every time interval, an email will be sent to the recipient email containing the updated log file that is timestamped. The time interval for emailing can be set by updating the email object creation within **installer.py**. If you plan on not DOSing your own email, I would recommend increasing the time to 10 minutes (keep in mind it's tracked in seconds so multiply by 60 for mins).
-
-## Future improvements :camera:
-Be on the lookout for screenshot capabilites. I am hoping to have this completed by the end of the week.
+PySpy will track the users :keyboard: and log the keystrokes to a file until the application is terminated. Every time interval, an email will be sent to the recipient email containing the updated log file that is timestamped and a :camera: snapshot of the current screen! The time interval for emailing can be set by updating the email object creation within **installer.py**. If you plan on not DOSing your own email, I would recommend increasing the time to 10 minutes (keep in mind it's tracked in seconds so multiply by 60 for mins).
