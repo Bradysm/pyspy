@@ -13,15 +13,15 @@ Prior to running this script, you will need two things:
 <senders-email>
 <recievers-email>
 ```
-2. You will need to import yagmail and run the following python code with the sender email and password:
-```python
-import yagmail
-yagmail.register('mygmailusername', 'mygmailpassword')
+2. You will then need to make sure that pyspy.sh has executable rights:
+```bash
+chmod +x pyspy.sh
 ```
 Currently, the script works by running the following command on your favorite bash terminal </br>
 ```shell
-sudo python installer.py
+./pyspy.sh
 ```
+This will run the keylogger and install the dependencies that are needed to run the program. It will aslo setup the email keyring so you don't have to!</br>
 The key here is that you need **ROOT** access to be able to retrieve the on_press events from the keyboard. So, if you were going to use this in real life you would need some form of root escalation prior to running this script.
 
 ## What to expect from PySpy :snake: :keyboard:
