@@ -3,6 +3,10 @@
 import pyscreenshot as Camera
 
 class ImageGrabber:
+    """
+    Imagegrabber for computers. Gives users the funcitonality
+    to take screenshots of the computer screen in various ways.
+    """
     def grab_to_file(self, filename="screenshot.png"):
         """
         Takes screenshot of the screen and saves it to the given filename
